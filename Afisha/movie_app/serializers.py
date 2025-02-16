@@ -34,3 +34,17 @@ class MoviesReviewsSerializer(serializers.ModelSerializer):
     def get_review_stars(self, movie):
         return [review.stars for review in movie.reviews.all()]
 
+class DirectorValidateSerializer(serializers.Serializer):
+    name = serializers.CharField(required=True, min_length=2, max_length=255)
+
+class MovieValidateSerializer(serializers.Serializer):
+    title = serializers.CharField(required=True, min_length=1, max_length=255)
+    description = serializers.CharField(required=True, min_length=1, max_length=255)
+    duration = serializers.IntegerField(required=True)
+    director_id = serializers.CharField(required=True)
+
+class ReviewValidateSerializer(serializers.Serializer):
+    text = serializers.CharField(required=True, min_length=1, max_length=255)
+    movie_id = serializers.IntegerField(required=True)
+    stars = serializers.IntegerField(required=True, min_value=1, max_value=10)
+
